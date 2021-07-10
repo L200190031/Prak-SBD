@@ -1,0 +1,34 @@
+create database klinik_L200190031;
+
+use klinik_L200190031;
+
+create table dokter(
+no_induk_dokter integer primary key,
+nama_dokter varchar(55) not null,
+alamat_dokter varchar(55) not null,
+spesialisasi varchar(25) not null);
+
+create table pasien(
+no_pasien integer primary key,
+nama_pasien varchar(55) not null,
+alamat_pasien varchar(55) not null,
+tgl_lahir varchar(25) not null);
+
+create table obat(
+no_obat integer primary key,
+nama_obat varchar(55) not null,
+jenis_obat varchar(55) not null,
+harga integer default 0 not null);
+
+create table resep(
+no_induk_dokterFK integer references dokter(no_induk_dokter) on delete cascade on update cascade,
+no_pasienFK integer references pasien(no_pasien) on delete cascade on update cascade,
+no_obatFK integer references obat(no_obat) on delete cascade on update cascade,
+key(no_induk_dokterFK, no_pasienFK, no_obatFK),
+keluhan varchar(55) not null,
+gejala varchar(55) not null,
+jenis_penyakit varchar(55) not null);
+
+create table pasien_has_obat(
+no_pasienFK integer references pasien(no_pasien) on delete cascade on update cascade,
+no_obatFK integer references obat(no_obat) on delete cascade on update cascade);
